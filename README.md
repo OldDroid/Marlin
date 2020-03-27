@@ -1,3 +1,11 @@
+# Ender 3 Pro SKR Mini E3 V1.2 Edition firmware with BLTouch support
+This is for all those people looking for the firmware changes BigTreeTech did to the Marlin source for the SKR Mini E3 V1.2.
+The pre-compiled firmware can be found under prebuilt_fw folder.
+It is based on the latest available Marlin v2.0.5.2 and includes bilinear bed leveling (4 probing points, 16 total) with BLTouch support.
+BLTouch has been wired to the Z-min endstop since i had trouble getting the sensor working on the corresponding probe/servo connector.
+Also the probe from nozzle offset is set to the original creality bltouch mount - so it can be used with the stock upgrade set available.
+Only thing that needs to be done is setting your according probe z offset (mine is -2.07, yours might differ).
+
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
