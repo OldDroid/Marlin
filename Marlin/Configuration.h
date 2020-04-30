@@ -537,10 +537,10 @@
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
-  // Ender 3 Pro
-  #define DEFAULT_bedKp 87.12
-  #define DEFAULT_bedKi 16.98
-  #define DEFAULT_bedKd 297.99
+  // Ender 3 Pro 24V Heatbed into 4mm borosilicate
+  #define DEFAULT_bedKp 93.79
+  #define DEFAULT_bedKi 18.28
+  #define DEFAULT_bedKd 320.79
 
 #endif // PIDTEMPBED
 
@@ -1247,7 +1247,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 4
+  #define GRID_MAX_POINTS_X 2
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1312,7 +1312,7 @@
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
   #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
-  #define MESH_EDIT_MENU        // Add a menu to edit mesh points
+  //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
