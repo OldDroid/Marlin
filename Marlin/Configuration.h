@@ -537,10 +537,10 @@
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
-  // Ender 3 Pro 24V Heatbed into 4mm borosilicate
-  #define DEFAULT_bedKp 93.79
-  #define DEFAULT_bedKi 18.28
-  #define DEFAULT_bedKd 320.79
+  // Ender 3 Pro 24V Heatbed (without magnetic surface) into 4mm borosilicate
+  #define DEFAULT_bedKp 92.65
+  #define DEFAULT_bedKi 16.76
+  #define DEFAULT_bedKd 341.37
 
 #endif // PIDTEMPBED
 
@@ -1054,7 +1054,7 @@
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR true
-#define INVERT_Z_DIR false
+#define INVERT_Z_DIR true
 
 // @section extruder
 
@@ -1361,7 +1361,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (30*60)
-#define HOMING_FEEDRATE_Z  (3*60)
+#define HOMING_FEEDRATE_Z  (4*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
