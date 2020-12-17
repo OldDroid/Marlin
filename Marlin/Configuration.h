@@ -547,10 +547,10 @@
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
-  // Ender 3 Pro 24V Heatbed (without magnetic surface) into 4mm borosilicate
-  #define DEFAULT_bedKp 92.65
-  #define DEFAULT_bedKi 16.76
-  #define DEFAULT_bedKd 341.37
+  // Ender 3 Pro 24V Heatbed (with magnetic surface) WhamBam SpringSteel and PEX
+  #define DEFAULT_bedKp 76.5809
+  #define DEFAULT_bedKi 14.9266
+  #define DEFAULT_bedKd 261.9321
 #endif // PIDTEMPBED
 
 #if EITHER(PIDTEMP, PIDTEMPBED)
