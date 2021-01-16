@@ -404,7 +404,7 @@
   #define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
   #define CONTROLLERFAN_SPEED_IDLE     0 // (0-255) Idle speed, used when motors are disabled
   #define CONTROLLERFAN_IDLE_TIME     60 // (seconds) Extra time to keep the fan running after disabling motors
-  //#define CONTROLLER_FAN_EDITABLE        // Enable M710 configurable settings
+  //#define CONTROLLER_FAN_EDITABLE      // Enable M710 configurable settings
   #if ENABLED(CONTROLLER_FAN_EDITABLE)
     #define CONTROLLER_FAN_MENU          // Enable the Controller Fan submenu
   #endif
@@ -653,12 +653,12 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 
-#define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
+#define HOMING_BUMP_MM      { 0, 0, 2 }       // (mm) Backoff from endstops after first bump
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 
 //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
 
-//#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
+#define QUICK_HOME                            // If G28 contains XY do a diagonal move first
 //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X
 //#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first
 
@@ -806,9 +806,11 @@
   #define TRAMMING_POINT_NAME_3 "Back-Right"
   #define TRAMMING_POINT_NAME_4 "Back-Left"
 
-  #define RESTORE_LEVELING_AFTER_G35    // Enable to restore leveling setup after operation
-  //#define REPORT_TRAMMING_MM          // Report Z deviation (mm) for each point relative to the first
-  //#define ASSISTED_TRAMMING_MENU_ITEM // Add a menu item for Assisted Tramming
+  // Enable to restore leveling setup after operation
+  #define RESTORE_LEVELING_AFTER_G35
+
+  // Add a menu item for Assisted Tramming
+  //#define ASSISTED_TRAMMING_MENU_ITEM
 
   /**
    * Screw thread:
@@ -860,7 +862,7 @@
 // Increase the slowdown divisor for larger buffer sizes.
 #define SLOWDOWN
 #if ENABLED(SLOWDOWN)
-  #define SLOWDOWN_DIVISOR 8
+  #define SLOWDOWN_DIVISOR 2
 #endif
 
 /**
@@ -1049,7 +1051,7 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 3*60, 2*60 } // Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // Feedrates for manual moves along X, Y, Z, E from panel
   #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
   #if ENABLED(ULTIPANEL)
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1264,7 +1266,7 @@
    * This feature must be enabled with "M540 S1" or from the LCD menu.
    * To have any effect, endstops must be enabled during SD printing.
    */
-  #define SD_ABORT_ON_ENDSTOP_HIT
+  //#define SD_ABORT_ON_ENDSTOP_HIT
 
   /**
    * This option makes it easier to print the same SD Card file again.
@@ -1329,18 +1331,16 @@
   // Add an optimized binary file transfer mode, initiated with 'M28 B1'
   //#define BINARY_FILE_TRANSFER
 
-  #if HAS_SDCARD_CONNECTION
-    /**
-     * Set this option to one of the following (or the board's defaults apply):
-     *
-     *           LCD - Use the SD drive in the external LCD controller.
-     *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
-     *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
-     *
-     * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
-     */
-    #define SDCARD_CONNECTION ONBOARD
-  #endif
+  /**
+   * Set this option to one of the following (or the board's defaults apply):
+   *
+   *           LCD - Use the SD drive in the external LCD controller.
+   *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
+   *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
+   *
+   * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
+   */
+  #define SDCARD_CONNECTION ONBOARD
 
 #endif // SDSUPPORT
 
@@ -1562,9 +1562,10 @@
 #endif
 
 //
-// Classic UI Options
+// FSMC / SPI Graphical TFT
 //
 #if TFT_SCALED_DOGLCD
+  //#define GRAPHICAL_TFT_ROTATE_180
   //#define TFT_MARLINUI_COLOR 0xFFFF // White
   //#define TFT_MARLINBG_COLOR 0x0000 // Black
   //#define TFT_DISABLED_COLOR 0x0003 // Almost black
@@ -1612,8 +1613,8 @@
   //#define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement).
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
-  //#define BABYSTEP_MILLIMETER_UNITS       // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
-  #define BABYSTEP_MULTIPLICATOR_Z  1       // (steps or mm) Steps or millimeter distance for each Z babystep
+  #define BABYSTEP_MILLIMETER_UNITS         // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
+  #define BABYSTEP_MULTIPLICATOR_Z  0.01    // (steps or mm) Steps or millimeter distance for each Z babystep
   #define BABYSTEP_MULTIPLICATOR_XY 1       // (steps or mm) Steps or millimeter distance for each XY babystep
 
   #define DOUBLECLICK_FOR_Z_BABYSTEPPING    // Double-click on the Status Screen for Z Babystepping.
@@ -1652,12 +1653,12 @@
  *
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0.0     // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.0    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
-  //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
+  #define EXPERIMENTAL_SCURVE   // Enable this option to permit S-Curve Acceleration
 #endif
 
 // @section leveling
@@ -1793,7 +1794,7 @@
 //
 // G2/G3 Arc Support
 //
-//#define ARC_SUPPORT                 // Disable this feature to save ~3226 bytes
+//#define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
   #define MM_PER_ARC_SEGMENT      1 // (mm) Length (or minimum length) of each arc segment
   //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
@@ -1891,18 +1892,18 @@
 // The number of linear moves that can be in the planner at once.
 // The value of BLOCK_BUFFER_SIZE must be a power of 2 (e.g. 8, 16, 32)
 #if BOTH(SDSUPPORT, DIRECT_STEPPING)
-  #define BLOCK_BUFFER_SIZE  16
+  #define BLOCK_BUFFER_SIZE  8
 #elif ENABLED(SDSUPPORT)
-  #define BLOCK_BUFFER_SIZE 32
+  #define BLOCK_BUFFER_SIZE 16
 #else
-  #define BLOCK_BUFFER_SIZE 32
+  #define BLOCK_BUFFER_SIZE 16
 #endif
 
 // @section serial
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 32
+#define BUFSIZE 4
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -1911,7 +1912,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 32
+#define TX_BUFFER_SIZE 0
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -1962,7 +1963,7 @@
 #define SERIAL_OVERRUN_PROTECTION
 
 // For serial echo, the number of digits after the decimal point
-#define SERIAL_FLOAT_PRECISION 4
+//#define SERIAL_FLOAT_PRECISION 4
 
 // @section extras
 
@@ -2096,7 +2097,7 @@
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     10  // (mm/s) Unload filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH       10  // (mm) The length of filament for a complete unload.
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH      100  // (mm) The length of filament for a complete unload.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
@@ -2105,7 +2106,7 @@
                                                   // 0 to disable start loading and skip to fast load only
   #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     0  // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH    15  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
   //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
@@ -2128,7 +2129,7 @@
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
   #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
-  //#define HOME_BEFORE_FILAMENT_CHANGE           // Ensure homing has been completed prior to parking for filament change
+  #define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
 
   #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
@@ -2267,7 +2268,7 @@
 
   #if AXIS_IS_TMC(X)
     #define X_CURRENT       580        // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_CURRENT_HOME  1000  // (mA) RMS current for sensorless homing
+    #define X_CURRENT_HOME  (X_CURRENT/2)  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16    // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
@@ -2283,7 +2284,7 @@
 
   #if AXIS_IS_TMC(Y)
     #define Y_CURRENT       580
-    #define Y_CURRENT_HOME  1000
+    #define Y_CURRENT_HOME  (Y_CURRENT/2)
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
@@ -2299,7 +2300,7 @@
 
   #if AXIS_IS_TMC(Z)
     #define Z_CURRENT       1000
-    #define Z_CURRENT_HOME  1500
+    #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
@@ -2504,7 +2505,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-  #define HYBRID_THRESHOLD
+  //#define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD     100  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
@@ -2554,7 +2555,7 @@
     // TMC2209: 0...255. TMC2130: -64...63
     #define X_STALL_SENSITIVITY  75
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  75
     #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
     //#define Z_STALL_SENSITIVITY  8
     //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
@@ -3375,25 +3376,6 @@
   #define JOY_Y_LIMITS { 5600, 8250-100, 8250+100, 11000 }
   #define JOY_Z_LIMITS { 4800, 8080-100, 8080+100, 11550 }
   //#define JOYSTICK_DEBUG
-#endif
-
-/**
- * Mechanical Gantry Calibration
- * Modern replacement for the Prusa TMC_Z_CALIBRATION.
- * Adds capability to work with any adjustable current drivers.
- * Implemented as G34 because M915 is deprecated.
- */
-//#define MECHANICAL_GANTRY_CALIBRATION
-#if ENABLED(MECHANICAL_GANTRY_CALIBRATION)
-  #define GANTRY_CALIBRATION_CURRENT          600     // Default calibration current in ma
-  #define GANTRY_CALIBRATION_EXTRA_HEIGHT      15     // Extra distance in mm past Z_###_POS to move
-  #define GANTRY_CALIBRATION_FEEDRATE         500     // Feedrate for correction move
-  //#define GANTRY_CALIBRATION_TO_MIN                 // Enable to calibrate Z in the MIN direction
-
-  //#define GANTRY_CALIBRATION_SAFE_POSITION  { X_CENTER, Y_CENTER } // Safe position for nozzle
-  //#define GANTRY_CALIBRATION_XY_PARK_FEEDRATE 3000  // XY Park Feedrate - MMM
-  //#define GANTRY_CALIBRATION_COMMANDS_PRE   ""
-  #define GANTRY_CALIBRATION_COMMANDS_POST  "G28"     // G28 highly recommended to ensure an accurate position
 #endif
 
 /**
